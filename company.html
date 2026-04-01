@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>صفحة الشركة | مسار - منصة المنظمات</title>
+  <!-- Google Fonts (Cairo) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Font Awesome 6 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Cairo', sans-serif;
+      background: #f4f8fd;
+      color: #1e2f40;
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 1300px;
+      margin: 0 auto;
+      padding: 0 25px;
+    }
+
+    /* header */
+    .top-bar {
+      background: white;
+      padding: 12px 0;
+      border-bottom: 1px solid #e0eaf3;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+    }
+
+    .top-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 26px;
+      font-weight: 800;
+      color: #0f3b5e;
+    }
+    .logo i {
+      color: #1f6e93;
+    }
+    .company-badge {
+      background: #def1ff;
+      padding: 10px 22px;
+      border-radius: 40px;
+      font-weight: 700;
+      color: #0f3b5e;
+    }
+    .company-badge i {
+      margin-left: 8px;
+    }
+
+    /* بطاقة تعريف الشركة */
+    .company-header {
+      background: white;
+      border-radius: 48px;
+      padding: 35px 40px;
+      margin: 35px 0 30px;
+      box-shadow: 0 12px 28px -12px rgba(15,59,94,0.2);
+      border: 1px solid #cde0ed;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 30px;
+    }
+    .company-icon {
+      background: #0f3b5e;
+      width: 100px;
+      height: 100px;
+      border-radius: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 50px;
+    }
+    .company-info {
+      flex: 1;
+    }
+    .company-info h1 {
+      font-size: 2.8rem;
+      font-weight: 800;
+      color: #0a2a44;
+      line-height: 1.2;
+    }
+    .company-meta {
+      display: flex;
+      gap: 35px;
+      margin-top: 12px;
+      color: #2e577a;
+      font-size: 1.1rem;
+    }
+    .edit-profile-btn {
+      background: transparent;
+      border: 2px solid #0f3b5e;
+      color: #0f3b5e;
+      padding: 14px 30px;
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .edit-profile-btn:hover {
+      background: #e7f2fc;
+    }
+
+    /* إحصائيات سريعة */
+    .stats-company {
+      display: grid;
+      grid-template-columns: repeat(4,1fr);
+      gap: 20px;
+      margin: 35px 0;
+    }
+    .stat-card {
+      background: white;
+      border-radius: 30px;
+      padding: 25px 15px;
+      text-align: center;
+      box-shadow: 0 5px 18px #d6e3f0;
+      border: 1px solid #bdd8ec;
+    }
+    .stat-card .num {
+      font-family: 'Inter', sans-serif;
+      font-size: 2.6rem;
+      font-weight: 800;
+      color: #0f3b5e;
+    }
+    .stat-card .label {
+      font-size: 1.1rem;
+      color: #2f587b;
+    }
+
+    /* لوحة التحكم الرئيسية (grid ثنائي) */
+    .company-dashboard {
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: 30px;
+      margin: 40px 0;
+    }
+    @media (max-width: 950px) {
+      .company-dashboard {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .card {
+      background: white;
+      border-radius: 40px;
+      padding: 28px 25px;
+      border: 1px solid #d9e6f2;
+      box-shadow: 0 8px 22px -6px rgba(15,59,94,0.06);
+      margin-bottom: 30px;
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: #0f3b5e;
+      border-bottom: 3px solid #dbeafe;
+      padding-bottom: 18px;
+      margin-bottom: 25px;
+    }
+    .card-header i {
+      background: #e2f0fd;
+      padding: 12px;
+      border-radius: 20px;
+    }
+
+    /* قائمة الفرص */
+    .job-list .job-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 10px;
+      border-bottom: 1px solid #e4eef8;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+    .job-item:last-child {
+      border: none;
+    }
+    .job-info h3 {
+      font-size: 1.4rem;
+      font-weight: 700;
+    }
+    .job-info span {
+      background: #d9ebf7;
+      padding: 5px 12px;
+      border-radius: 30px;
+      font-size: 0.9rem;
+      margin-left: 10px;
+      color: #0b3b55;
+    }
+    .job-stats {
+      display: flex;
+      gap: 25px;
+      align-items: center;
+    }
+    .job-stats i {
+      color: #256f8c;
+      margin-left: 5px;
+    }
+    .btn-outline-small {
+      background: white;
+      border: 2px solid #0f3b5e;
+      color: #0f3b5e;
+      padding: 8px 24px;
+      border-radius: 30px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    /* بطاقات الطلاب الموصى بهم */
+    .student-suggest {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      padding: 15px 0;
+      border-bottom: 1px dashed #bcd3e7;
+    }
+    .student-avatar {
+      background: #0f3b5e;
+      width: 55px;
+      height: 55px;
+      border-radius: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 24px;
+    }
+    .student-details h4 {
+      font-weight: 700;
+    }
+    .student-details p {
+      color: #34678a;
+    }
+    .connect-btn {
+      margin-right: auto;
+      background: #e5f2fb;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 30px;
+      font-weight: 600;
+      color: #0f3b5e;
+      cursor: pointer;
+      transition: 0.1s;
+    }
+
+    /* نموذج إضافة فرصة */
+    .add-job-form {
+      background: #f2f9ff;
+      border-radius: 32px;
+      padding: 25px;
+      margin-top: 20px;
+    }
+    .form-row {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 15px;
+      flex-wrap: wrap;
+    }
+    .form-group {
+      flex: 1 1 200px;
+    }
+    .form-group input, .form-group select, .form-group textarea {
+      width: 100%;
+      padding: 14px 18px;
+      border: 2px solid #c9ddec;
+      border-radius: 60px;
+      font-family: 'Cairo', sans-serif;
+      font-size: 1rem;
+    }
+    .form-group textarea {
+      border-radius: 30px;
+    }
+    .btn {
+      background: #0f3b5e;
+      color: white;
+      border: none;
+      padding: 14px 36px;
+      border-radius: 60px;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* تذييل */
+    .footer-info {
+      background: #0f2b40;
+      color: white;
+      border-radius: 60px 60px 0 0;
+      padding: 40px;
+      margin-top: 60px;
+      text-align: center;
+    }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .company-dashboard { grid-template-columns: 1fr; }
+      .company-header { flex-direction: column; text-align: center; }
+      .company-meta { flex-wrap: wrap; justify-content: center; }
+      .stats-company { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 768px) {
+      .top-content { flex-direction: column; gap: 15px; }
+      .company-info h1 { font-size: 2rem; }
+      .stats-company { grid-template-columns: 1fr; }
+      .job-item { flex-direction: column; align-items: flex-start; text-align: right; }
+      .job-stats { width: 100%; justify-content: space-between; margin-top: 15px; }
+      .form-row { flex-direction: column; }
+    }
+    @media (max-width: 480px) {
+      .logo { font-size: 22px; }
+      .stat-card .num { font-size: 2rem; }
+      .card-header { flex-wrap: wrap; font-size: 1.3rem; }
+      .btn, .btn-outline-small { width: 100%; text-align: center; justify-content: center; }
+    }
+
+    /* Modal styles */
+    .modal-overlay {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(15, 43, 64, 0.6);
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(4px);
+    }
+    .modal-overlay.active { display: flex; }
+    .modal-container {
+      background: white;
+      width: 95%;
+      max-width: 750px;
+      border-radius: 35px;
+      padding: 35px;
+      max-height: 85vh;
+      overflow-y: auto;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+      position: relative;
+    }
+    .modal-close {
+      position: absolute;
+      top: 25px; left: 25px;
+      background: #f1f5f9;
+      border: none;
+      width: 40px; height: 40px;
+      border-radius: 20px;
+      font-size: 1.2rem;
+      color: #64748b;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .modal-close:hover { background: #e2e8f0; color: #1e293b; }
+    .applicant-card {
+      border: 1px solid #e2ebf3;
+      border-radius: 25px;
+      padding: 22px;
+      margin-bottom: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: space-between;
+      align-items: center;
+      background: #fafdff;
+    }
+    .app-info h4 { font-size: 1.4rem; color: #0f3b5e; margin-bottom: 6px; font-weight: 800; }
+    .app-info p { color: #475569; font-size: 1rem; margin-bottom: 8px; }
+    .app-info i { width: 30px; color: #94a3b8; text-align: center; }
+    .app-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+    .app-actions button {
+      padding: 12px 20px; border-radius: 25px; cursor: pointer; font-size: 0.95rem; font-weight: 700;
+      border: none; display: flex; align-items: center; gap: 8px; transition: 0.2s;
+    }
+    .btn-cv { background: #e0f2fe; color: #0284c7; }
+    .btn-contact { background: #0f3b5e; color: white; }
+    .btn-cv:hover { background: #bae6fd; }
+    .btn-contact:hover { background: #0c2b44; }
+  </style>
+</head>
+<body>
+  <div class="top-bar">
+    <div class="container top-content">
+      <div class="logo">
+        <i class="fas fa-briefcase"></i>
+        <span>مسار | بوابة المنظمات</span>
+      </div>
+      <div class="company-badge"><i class="fas fa-building"></i> شركة تكوين الرقمية</div>
+    </div>
+  </div>
+
+  <main class="container">
+    <!-- تعريف الشركة -->
+    <div class="company-header">
+      <div class="company-icon">
+        <i class="fas fa-building"></i>
+      </div>
+      <div class="company-info">
+        <h1>شركة تكوين الرقمية</h1>
+        <div class="company-meta">
+          <span><i class="fas fa-tag"></i> تقنية المعلومات والذكاء الاصطناعي</span>
+          <span><i class="fas fa-map-pin"></i> الرياض، السعودية</span>
+          <span><i class="fas fa-users"></i> ٤٥٠+ موظف</span>
+        </div>
+        <p style="margin-top:12px; color:#2b5270; max-width:600px;">شركة رائدة في التحول الرقمي، توفر حلولاً مبتكرة في الذكاء الاصطناعي وتطوير الأنظمة، وتؤمن بتأهيل الكفاءات الشابة.</p>
+      </div>
+      <button class="edit-profile-btn"><i class="fas fa-pen"></i> تعديل الملف</button>
+    </div>
+
+    <!-- إحصائيات سريعة للشركة -->
+    <div class="stats-company">
+      <div class="stat-card"><span class="num">٣٢</span><div class="label">فرصة متاحة</div></div>
+      <div class="stat-card"><span class="num">١٢٤</span><div class="label">متقدم جديد</div></div>
+      <div class="stat-card"><span class="num">٨٩</span><div class="label">مقابلة مجدولة</div></div>
+      <div class="stat-card"><span class="num">١٨</span><div class="label">توظيف ناجح</div></div>
+    </div>
+
+    <!-- محتوى grid: يمين (الفرص + إضافة) / يسار (طلاب + تحليلات) -->
+    <div class="company-dashboard">
+      <!-- العمود الأيمن (الأكبر) -->
+      <section>
+        <!-- قائمة الفرص الوظيفية -->
+        <div class="card">
+          <div class="card-header">
+            <i class="fas fa-bullhorn"></i>
+            <span>الفرص الوظيفية والتدريب</span>
+          </div>
+          <div class="job-list" id="jobListContainer">
+            <!-- ديناميكي من JS -->
+          </div>
+          <button class="btn-outline-small" style="margin-top:15px; width:100%;" id="refreshJobsBtn"><i class="fas fa-rotate"></i> تحديث القائمة</button>
+        </div>
+
+        <!-- إضافة فرصة جديدة (نموذج) -->
+        <div class="card">
+          <div class="card-header">
+            <i class="fas fa-plus-circle"></i>
+            <span>إضافة فرصة جديدة</span>
+          </div>
+          <form id="addJobForm" class="add-job-form">
+            <div class="form-row">
+              <div class="form-group">
+                <input type="text" id="jobTitle" placeholder="المسمى الوظيفي" value="مطور واجهات Frontend">
+              </div>
+              <div class="form-group">
+                <select id="jobType">
+                  <option>دوام كامل</option>
+                  <option>دوام جزئي</option>
+                  <option>تدريب</option>
+                  <option>عن بعد</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <input type="text" id="jobLocation" placeholder="الموقع (مثال: الرياض)" value="الرياض">
+              </div>
+              <div class="form-group">
+                <input type="text" id="jobDeadline" placeholder="آخر موعد (سنة-شهر-يوم)" value="٢٠٢٥-٠٦-٣٠">
+              </div>
+            </div>
+            <div class="form-group">
+              <textarea id="jobDesc" rows="2" placeholder="وصف مختصر للفرصة ...">تطوير واجهات المستخدم باستخدام React وخبرة في التكامل مع API</textarea>
+            </div>
+            <button type="submit" class="btn"><i class="fas fa-cloud-upload-alt"></i> نشر الفرصة</button>
+          </form>
+        </div>
+
+        <!-- مؤشرات المواءمة مع الخريجين (تحليل) -->
+        <div class="card">
+          <div class="card-header">
+            <i class="fas fa-chart-simple"></i>
+            <span>مؤشرات المواءمة مع مخرجات التعليم</span>
+          </div>
+          <div style="display:flex; flex-direction:column; gap:20px;">
+            <div><span style="font-weight:700;">التوافق مع تخصصات الطلاب:</span> <span style="color:#0f3b5e;">٨٢٪</span><div style="background:#e2ecf5; height:12px; border-radius:30px; margin-top:5px;"><div style="width:82%; background:#1a6085; height:12px; border-radius:30px;"></div></div></div>
+            <div><span style="font-weight:700;">نسبة استقطاب الخريجين الجدد:</span> <span style="color:#0f3b5e;">٤٥٪</span><div style="background:#e2ecf5; height:12px; border-radius:30px; margin-top:5px;"><div style="width:45%; background:#1a6085; height:12px; border-radius:30px;"></div></div></div>
+            <div><span style="font-weight:700;">المهارات الأكثر طلباً لدي الشركة:</span> React, Python, تحليل البيانات, التواصل</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- العمود الأيسر (طلاب موصى بهم + منظمات أخرى + قاعدة بيانات) -->
+      <aside>
+        <!-- طالبون موصى بهم (كفاءات) -->
+        <div class="card">
+          <div class="card-header">
+            <i class="fas fa-user-graduate"></i>
+            <span>كفاءات موصى بها</span>
+          </div>
+          <div id="recommendedStudents">
+            <!-- ستتم التعبئة عبر JS -->
+          </div>
+          <button class="btn-outline-small" style="width:100%; margin-top:18px;" id="moreStudentsBtn"><i class="fas fa-search"></i> تصفح جميع الطلاب</button>
+        </div>
+
+        <!-- قاعدة بيانات الخريجين - تحليل مصغر -->
+        <div class="card">
+          <div class="card-header">
+            <i class="fas fa-database"></i>
+            <span>قاعدة بيانات الخريجين</span>
+          </div>
+          <div style="margin:10px 0;">
+            <div style="display:flex; justify-content:space-between;"><span>إجمالي الخريجين المسجلين</span> <span class="stat-number" style="font-weight:800;">١٢,٨٤٠</span></div>
+            <div style="display:flex; justify-content:space-between;"><span>منهم بتخصص تقني</span> <span>٥,٢٣٠</span></div>
+            <div style="display:flex; justify-content:space-between;"><span>متوسط سنوات الخبرة</span> <span>١.٨ سنة</span></div>
+            <hr style="border:1px dashed #c1d5e8; margin:12px 0;">
+            <div style="color:#0b4b6b;">أعلى الجامعات تواجداً : الملك سعود، الملك فهد، اليمامة</div>
+          </div>
+          <button class="btn-outline-small" style="width:100%;"><i class="fas fa-chart-line"></i> تحليل متقدم</button>
+        </div>
+
+        <!-- رسالة سريعة: تتبع الخريجين -->
+        <div style="background:#d7eaf8; border-radius:30px; padding:22px; border:1px solid #b0cee8;">
+          <i class="fas fa-arrow-trend-up" style="font-size:32px; color:#0f3b5e;"></i>
+          <h4 style="color:#0f3b5e;">نظام تتبع الخريجين</h4>
+          <p style="color:#1b4761;">ساهم في تطورهم الوظيفي وتابع أداءهم بعد التوظيف لتعزيز مؤشرات النمو.</p>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="footer-info">
+    <p>منصة مسار · شراكتكم مع التعليم تصنع المستقبل   |   جميع الحقوق محفوظة © ٢٠٢٥</p>
+  </footer>
+
+  <!-- Modal لعرض تفاصيل المتقدمين -->
+  <div class="modal-overlay" id="applicantModal">
+    <div class="modal-container">
+      <button class="modal-close" id="closeModalBtn"><i class="fas fa-times"></i></button>
+      <div id="modalContent">
+        <!-- المحتوى سيُضاف عبر الـ JS -->
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function() {
+      // قراءة الفرص من LocalStorage أو تعيين قيم مبدئية
+      let storedJobs = localStorage.getItem('masar_jobs');
+      let jobs = [];
+      
+      const names1 = ['عمر الزهراني', 'خالد الزهراني', 'عبدالله الغامدي'];
+      const names2 = ['علي الغامدي', 'فارس الغامدي'];
+      const names3 = ['حسين النجراني'];
+
+      if (storedJobs) {
+        jobs = JSON.parse(storedJobs);
+        // تحديث الأسماء الوهمية القديمة للأسماء الجديدة في الفرص الافتراضية
+        if(jobs[0] && jobs[0].id === 1) jobs[0].applicants = names1;
+        if(jobs[1] && jobs[1].id === 2) jobs[1].applicants = names2;
+        if(jobs[2] && jobs[2].id === 3) jobs[2].applicants = names3;
+        localStorage.setItem('masar_jobs', JSON.stringify(jobs));
+      } else {
+        jobs = [
+          { id: 1, title: 'مطور Full Stack', type: 'دوام كامل', applicants: names1, location: 'الرياض', company: 'شركة تكوين الرقمية' },
+          { id: 2, title: 'أخصائي تسويق رقمي', type: 'تدريب', applicants: names2, location: 'جدة', company: 'شركة تكوين الرقمية' },
+          { id: 3, title: 'محلل بيانات', type: 'دوام كامل', applicants: names3, location: 'الرياض', company: 'شركة تكوين الرقمية' },
+          { id: 4, title: 'مصمم UI/UX', type: 'دوام جزئي', applicants: [], location: 'عن بعد', company: 'شركة تكوين الرقمية' }
+        ];
+        localStorage.setItem('masar_jobs', JSON.stringify(jobs));
+      }
+
+      const jobContainer = document.getElementById('jobListContainer');
+
+      function renderJobs() {
+        jobs = JSON.parse(localStorage.getItem('masar_jobs')) || jobs; // جلب أحدث البيانات
+        jobContainer.innerHTML = '';
+        jobs.forEach((job) => {
+          if(job.company !== 'شركة تكوين الرقمية') return; // عرض فرص هذه الشركة فقط
+          const jobDiv = document.createElement('div');
+          jobDiv.className = 'job-item';
+          jobDiv.innerHTML = `
+            <div class="job-info">
+              <h3>${job.title} <span>${job.type}</span></h3>
+              <div style="color:#3a6783;"><i class="fas fa-map-marker-alt"></i> ${job.location}  |  <i class="fas fa-users"></i> ${job.applicants.length} متقدم</div>
+            </div>
+            <div class="job-stats">
+              <span><i class="far fa-clock"></i> محدث اليوم</span>
+              <button class="btn-outline-small" data-id="${job.id}">عرض المتقدمين</button>
+            </div>
+          `;
+          jobContainer.appendChild(jobDiv);
+        });
+
+        // زر عرض أسماء المتقدمين الحقيقية
+        document.querySelectorAll('.job-stats button').forEach(btn => {
+          btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            const jobId = btn.getAttribute('data-id');
+            const job = jobs.find(j => j.id == jobId);
+            const modalContent = document.getElementById('modalContent');
+            
+            if(job && job.applicants.length > 0) {
+                let html = `<h2 style="color:#0f3b5e; margin-bottom:25px; font-weight:800;"><i class="fas fa-users" style="color:#38bdf8;"></i> المتقدمون لفرصة: ${job.title}</h2>`;
+                
+                job.applicants.forEach(app => {
+                    let appName = typeof app === 'string' ? app : app.name;
+                    let appMajor = typeof app === 'object' && app.major ? app.major : (job.title.includes('مطور') ? 'هندسة برمجيات' : 'تخصص ملائم للمجال');
+                    let appExp = typeof app === 'object' && app.experience ? app.experience : 'خبرة سنة واحدة';
+                    
+                    html += `
+                      <div class="applicant-card">
+                        <div class="app-info">
+                          <h4>${appName}</h4>
+                          <p><i class="fas fa-graduation-cap"></i> التخصص: <strong>${appMajor}</strong></p>
+                          <p><i class="fas fa-briefcase"></i> الخبرة: <strong>${appExp}</strong></p>
+                        </div>
+                        <div class="app-actions">
+                          <button class="btn-cv" onclick="alert('جاري التنزيل و فتح نافذة السيرة الذاتية وملف الشهادات المرفقة لـ ${appName}...')"><i class="fas fa-file-invoice"></i> المستندات</button>
+                          <button class="btn-contact" onclick="alert('تم فتح واجهة المراسلة المباشرة مع ${appName} لتحديد موعد المقابلة الوظيفية.')"><i class="fas fa-comments"></i> تواصل</button>
+                        </div>
+                      </div>
+                    `;
+                });
+                modalContent.innerHTML = html;
+            } else {
+                modalContent.innerHTML = `<div style="text-align:center; padding:50px;"><i class="fas fa-folder-open" style="font-size:4rem; color:#cbd5e1; margin-bottom:20px;"></i><h3 style="color:#64748b;">لا يوجد متقدمين حتى الآن لهذه الفرصة.</h3><p style="color:#94a3b8; font-size:1.1rem; margin-top:10px;">ستصلك إشعارات فور تقدم أحد الخريجين.</p></div>`;
+            }
+            document.getElementById('applicantModal').classList.add('active');
+          });
+        });
+      }
+
+      // إغلاق المودال
+      document.getElementById('closeModalBtn')?.addEventListener('click', () => {
+         document.getElementById('applicantModal').classList.remove('active');
+      });
+
+      renderJobs();
+
+      // إضافة فرصة جديدة
+      document.getElementById('addJobForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const title = document.getElementById('jobTitle').value.trim();
+        const type = document.getElementById('jobType').value;
+        const location = document.getElementById('jobLocation').value.trim();
+        const desc = document.getElementById('jobDesc').value.trim();
+
+        if (!title) {
+          alert('يرجى إدخال المسمى الوظيفي');
+          return;
+        }
+
+        const newJob = { id: Date.now(), title: title, type: type, applicants: [], location: location || 'غير محدد', company: 'شركة تكوين الرقمية' };
+        jobs.push(newJob);
+        localStorage.setItem('masar_jobs', JSON.stringify(jobs));
+        renderJobs();
+
+        alert(`تم نشر الفرصة "${title}" بنجاح وستظهر للطلاب فوراً.`);
+      });
+
+      // زر تحديث القائمة
+      document.getElementById('refreshJobsBtn').addEventListener('click', renderJobs);
+
+      // ---------- الطلاب الموصى بهم ----------
+      const students = [
+        { name: 'عمر الزهراني', major: 'هندسة برمجيات', year: '٢٠٢٤', match: '٩٥٪' },
+        { name: 'خالد الزهراني', major: 'علوم حاسب', year: '٢٠٢٣', match: '٨٨٪' },
+        { name: 'فارس الغامدي', major: 'تحليل البيانات', year: '٢٠٢٥', match: '٩٢٪' },
+        { name: 'حسين النجراني', major: 'هندسة حاسب', year: '٢٠٢٤', match: '٧٩٪' },
+      ];
+
+      const studentDiv = document.getElementById('recommendedStudents');
+      function renderStudents() {
+        studentDiv.innerHTML = '';
+        students.forEach(s => {
+          const row = document.createElement('div');
+          row.className = 'student-suggest';
+          row.innerHTML = `
+            <div class="student-avatar"><i class="fas fa-user"></i></div>
+            <div class="student-details">
+              <h4>${s.name}</h4>
+              <p>${s.major} · تخرج ${s.year} <span style="background:#d4ecff; padding:2px 10px; border-radius:20px;">توافق ${s.match}</span></p>
+            </div>
+            <button class="connect-btn"><i class="fas fa-paper-plane"></i> تواصل</button>
+          `;
+          studentDiv.appendChild(row);
+        });
+
+        // أزرار التواصل
+        document.querySelectorAll('.connect-btn').forEach(btn => {
+          btn.addEventListener('click', () => alert('تم إرسال طلب تواصل للطالب (محاكاة)'));
+        });
+      }
+      renderStudents();
+
+      document.getElementById('moreStudentsBtn').addEventListener('click', () => alert('سيتم فتح قائمة جميع الطلاب (قيد التطوير)'));
+
+    })();
+  </script>
+</body>
+</html>

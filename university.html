@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>جامعة الباحة | لوحة تحكم التعليم العالي</title>
+  <!-- Google Fonts (Cairo) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Font Awesome 6 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Cairo', sans-serif;
+      background: #f2f7fc;
+      color: #183f5c;
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 25px;
+    }
+
+    /* الهيدر الخاص بالجامعة */
+    .univ-top {
+      background: linear-gradient(135deg, #0b2d48, #123f60);
+      color: white;
+      padding: 20px 0;
+      border-bottom: 4px solid #3680b0;
+      box-shadow: 0 10px 25px rgba(0,30,50,0.2);
+    }
+
+    .univ-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .univ-logo {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+    .univ-logo i {
+      font-size: 48px;
+      color: #ffd966;
+    }
+    .univ-logo h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+    }
+    .univ-logo span {
+      color: #bbdfff;
+      font-size: 1rem;
+      margin-right: 8px;
+    }
+
+    .univ-badge {
+      background: rgba(255,255,255,0.15);
+      padding: 12px 28px;
+      border-radius: 60px;
+      font-size: 1.2rem;
+      font-weight: 700;
+      border: 1px solid #8bb9dd;
+      backdrop-filter: blur(4px);
+    }
+
+    /* stats علوية */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 25px;
+      margin: 40px 0 30px;
+    }
+
+    .stat-uni-card {
+      background: white;
+      border-radius: 32px;
+      padding: 25px 15px;
+      text-align: center;
+      box-shadow: 0 8px 25px -8px #a0bed6;
+      border: 1px solid #cee2f2;
+    }
+    .stat-uni-card .number {
+      font-family: 'Inter', sans-serif;
+      font-size: 3rem;
+      font-weight: 800;
+      color: #0f3b5e;
+      line-height: 1.2;
+    }
+    .stat-uni-card .label {
+      font-size: 1.2rem;
+      color: #2a577b;
+    }
+
+    /* شبكة لوحة التحكم الرئيسية */
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 25px;
+      margin: 35px 0;
+    }
+
+    @media (max-width: 1000px) {
+      .dashboard-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    @media (max-width: 700px) {
+      .dashboard-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .card {
+      background: white;
+      border-radius: 40px;
+      padding: 25px 22px;
+      border: 1px solid #cde0ed;
+      box-shadow: 0 12px 24px -14px rgba(15,59,94,0.15);
+      transition: 0.2s;
+    }
+    .card:hover {
+      box-shadow: 0 18px 30px -10px #356f96;
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: #0f3b5e;
+      border-bottom: 3px solid #d1e5f5;
+      padding-bottom: 15px;
+      margin-bottom: 20px;
+    }
+    .card-header i {
+      background: #d2e9ff;
+      padding: 12px;
+      border-radius: 20px;
+    }
+
+    /* شريط التقدم */
+    .progress-item {
+      margin: 15px 0;
+    }
+    .progress-label {
+      display: flex;
+      justify-content: space-between;
+      font-weight: 600;
+      color: #1e4e73;
+    }
+    .bar-bg {
+      background: #e1edf7;
+      height: 14px;
+      border-radius: 30px;
+      margin: 5px 0;
+      overflow: hidden;
+    }
+    .bar-fill {
+      background: #0f3b5e;
+      height: 14px;
+      border-radius: 30px;
+      width: 0%;
+    }
+
+    /* قائمة الشركاء */
+    .partner-item {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      padding: 12px 0;
+      border-bottom: 1px solid #d6e6f5;
+    }
+    .partner-icon {
+      background: #0f3b5e;
+      color: white;
+      width: 45px;
+      height: 45px;
+      border-radius: 25px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+    }
+    .partner-details {
+      flex: 1;
+    }
+    .partner-details h4 {
+      font-weight: 700;
+    }
+    .partner-details p {
+      color: #2e6085;
+      font-size: 0.9rem;
+    }
+    .badge-offer {
+      background: #b1d7f0;
+      padding: 4px 12px;
+      border-radius: 30px;
+      font-weight: 600;
+      font-size: 0.85rem;
+    }
+
+    /* تذييل */
+    .footer-uni {
+      background: #102c40;
+      color: white;
+      padding: 30px;
+      border-radius: 60px 60px 0 0;
+      margin-top: 60px;
+      text-align: center;
+      font-size: 1.1rem;
+    }
+
+    /* خريجون / جداول صغيرة */
+    .alumni-row {
+      display: flex;
+      justify-content: space-between;
+      background: #f0f7fe;
+      padding: 12px 15px;
+      border-radius: 40px;
+      margin: 10px 0;
+    }
+    .grade-badge {
+      background: #0f3b5e;
+      color: white;
+      border-radius: 40px;
+      padding: 2px 16px;
+    }
+
+    .btn-outline-small {
+      background: white;
+      border: 2px solid #0f3b5e;
+      color: #0f3b5e;
+      padding: 8px 18px;
+      border-radius: 30px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      margin-top: 12px;
+      display: inline-block;
+    }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .dashboard-grid { grid-template-columns: repeat(2, 1fr); }
+      .stats-row { grid-template-columns: repeat(2, 1fr); }
+      div[style*="grid-template-columns: 2fr 1fr"] { grid-template-columns: 1fr !important; }
+    }
+    @media (max-width: 768px) {
+      .univ-header { flex-direction: column; text-align: center; }
+      .univ-logo { flex-direction: column; }
+      .dashboard-grid { grid-template-columns: 1fr; }
+      .stats-row { grid-template-columns: 1fr; }
+      .card { padding: 20px 15px; }
+      .alumni-row { flex-direction: column; gap: 10px; text-align: center; }
+      .partner-item { flex-direction: column; text-align: center; }
+      /* Table responsiveness */
+      table { display: block; overflow-x: auto; white-space: nowrap; }
+    }
+    @media (max-width: 480px) {
+      .univ-logo h1 { font-size: 1.6rem; }
+      .stat-uni-card .number { font-size: 2.2rem; }
+      .card-header { font-size: 1.2rem; }
+      .btn-outline-small { width: 100%; text-align: center; }
+      .footer-uni { padding: 20px 15px; font-size: 0.95rem; border-radius: 30px 30px 0 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="univ-top">
+    <div class="container univ-header">
+      <div class="univ-logo">
+        <h1>جامعة الباحة |  </span> داشبورد للخريجين</h1>
+      </div>
+      <div class="univ-badge">
+        <i class="fas fa-calendar-alt"></i> العام الجامعي ١٤٤٦ - ١٤٤٧ هـ
+      </div>
+    </div>
+  </div>
+
+  <main class="container">
+    <!-- أرقام سريعة عن أداء الخريجين -->
+    <div class="stats-row">
+      <div class="stat-uni-card">
+        <div class="number" id="totalGrads">٥,٢٤٠</div>
+        <div class="label">إجمالي الخريجين (آخر ٣ سنوات)</div>
+      </div>
+      <div class="stat-uni-card">
+        <div class="number" id="employPercent">٨٤٪</div>
+        <div class="label">نسبة التوظيف خلال ٦ شهور</div>
+      </div>
+     
+      <div class="stat-uni-card">
+        <div class="number" id="partnerCount">15</div>
+        <div class="label">منظمة شريكة في التدريب</div>
+      </div>
+    </div>
+
+    <!-- شبكة المحتوى الرئيسي: 3 أعمدة -->
+    <div class="dashboard-grid">
+      <!-- عمود 1: مؤشرات المواءمة بين التخصصات وسوق العمل -->
+      <div class="card">
+        <div class="card-header">
+          <i class="fas fa-chart-pie"></i>
+          <span>المواءمة مع سوق العمل</span>
+        </div>
+        <div class="progress-item">
+          <div class="progress-label"><span>هندسة البرمجيات</span> <span>٩٢٪</span></div>
+          <div class="bar-bg"><div class="bar-fill" style="width:92%"></div></div>
+        </div>
+        <div class="progress-item">
+          <div class="progress-label"><span>علوم الحاسب</span> <span>٨٨٪</span></div>
+          <div class="bar-bg"><div class="bar-fill" style="width:88%"></div></div>
+        </div>
+        <div class="progress-item">
+          <div class="progress-label"><span>الهندسة الكهربائية</span> <span>٧٦٪</span></div>
+          <div class="bar-bg"><div class="bar-fill" style="width:76%"></div></div>
+        </div>
+        <div class="progress-item">
+          <div class="progress-label"><span>إدارة الأعمال</span> <span>٨١٪</span></div>
+          <div class="bar-bg"><div class="bar-fill" style="width:81%"></div></div>
+        </div>
+        <div class="progress-item">
+          <div class="progress-label"><span>التسويق</span> <span>٧٩٪</span></div>
+          <div class="bar-bg"><div class="bar-fill" style="width:79%"></div></div>
+        </div>
+        <button class="btn-outline-small" style="width:100%; margin-top:20px;" onclick="alert('تقرير مفصل عن المواءمة حسب الكلية')"><i class="fas fa-download"></i> تحميل التقرير الكامل</button>
+      </div>
+
+      <!-- عمود 2: تتبع الخريجين (مسارات) وأداءهم -->
+      <div class="card">
+        <div class="card-header">
+          <i class="fas fa-user-graduate"></i>
+          <span>تتبع الخريجين · مسارات وظيفية</span>
+        </div>
+        <div class="alumni-row">
+          <span><i class="fas fa-code"></i> تقني</span>
+          <span>١,٨٩٠ خريج</span>
+          <span class="grade-badge">نمو +٢١٪</span>
+        </div>
+        <div class="alumni-row">
+          <span><i class="fas fa-chart-line"></i> مالي / إداري</span>
+          <span>١,٢٠٠ خريج</span>
+          <span class="grade-badge">نمو +٩٪</span>
+        </div>
+        <div class="alumni-row">
+          <span><i class="fas fa-flask"></i> هندسي/علمي</span>
+          <span>٩٨٠ خريج</span>
+          <span class="grade-badge">نمو +١٥٪</span>
+        </div>
+        <div class="alumni-row">
+          <span><i class="fas fa-pen"></i> إبداعي / تسويق</span>
+          <span>٦٧٠ خريج</span>
+          <span class="grade-badge">نمو +٣٢٪</span>
+        </div>
+
+        <div style="margin-top:20px;">
+          <span style="font-weight:700;">مؤشر الاستقرار الوظيفي:</span>
+          <div style="background:#e1edf7; border-radius:40px; padding:10px 18px; margin-top:8px;">
+            <span style="color:#0f3b5e; font-weight:800;">٧٨٪</span> منهم مستمرون في نفس المجال بعد سنتين
+          </div>
+        </div>
+      </div>
+
+      <!-- عمود 3: الشراكات والمنظمات النشطة -->
+      <div class="card">
+        <div class="card-header">
+          <i class="fas fa-handshake"></i>
+          <span>الشراكات النشطة · منظمات</span>
+        </div>
+        <div id="partnerListContainer">
+          <!-- حقن عبر JS -->
+        </div>
+        <div style="margin-top:20px;">
+          <button class="btn-outline-small" style="width:100%;" onclick="alert('طلب شراكة جديدة - سيتم فتح نموذج')"><i class="fas fa-plus-circle"></i> تسجيل منظمة شريكة</button>
+        </div>
+      </div>
+    </div> <!-- نهاية grid -->
+
+    <!-- الصف الثاني: قاعدة بيانات تفاعلية + تحليلات المقررات -->
+    <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 25px; margin: 30px 0;">
+      <!-- قاعدة بيانات الخريجين المركزية (عينة) -->
+      <div class="card">
+        <div class="card-header">
+          <i class="fas fa-database"></i>
+          <span>قاعدة بيانات الخريجين المركزية</span>
+        </div>
+        <p style="margin-bottom:15px;">مؤشرات دقيقة عن مسارات الخريجين محدثة بشكل مستدام (آخر تحديث: ٢٠٢٥/٠٣/٠١)</p>
+        <table style="width:100%; border-collapse: collapse;">
+          <thead style="background:#ecf5fc;">
+            <tr><th>الكلية</th><th>عدد الخريجين</th><th>نسبة التوظيف</th></tr>
+          </thead>
+          <tbody style="text-align:center;">
+            <tr style="border-bottom:1px solid #cde0ed;"><td>الهندسة</td><td>١٬٤٥٠</td><td>٨٥٪</td></tr>
+            <tr style="border-bottom:1px solid #cde0ed;"><td>علوم الحاسب</td><td>٢٬١٨٠</td><td>٩١٪</td></tr>
+            <tr style="border-bottom:1px solid #cde0ed;"><td>إدارة الأعمال</td><td>١٬٦٧٠</td><td>٧٩٪</td></tr>
+            <tr><td>الآداب والعلوم</td><td>٨٩٠</td><td>٦٨٪</td></tr>
+          </tbody>
+        </table>
+        <button class="btn-outline-small" style="width:100%; margin-top:22px;"><i class="fas fa-chart-bar"></i> تحليل متقدم وتصدير</button>
+      </div>
+
+      <!-- تخطيط مستقبلي وتحسين المناهج -->
+      <div class="card">
+        <div class="card-header">
+          <i class="fas fa-lightbulb"></i>
+          <span>التخطيط المستقبلي</span>
+        </div>
+        <div style="background:#f5faff; border-radius:32px; padding:20px;">
+          <p><i class="fas fa-check-circle" style="color:#0f7b4a;"></i> <strong>توصيات:</strong> تحديث مناهج الذكاء الاصطناعي (طلب السوق +٤٠٪)</p>
+          <p><i class="fas fa-check-circle" style="color:#0f7b4a;"></i> <strong>فجوة مهارية:</strong> تحليل البيانات والمرونة التكنولوجية</p>
+          <p><i class="fas fa-chart-simple"></i> <strong>نمو متوقع:</strong> زيادة توظيف خريجي الأمن السيبراني ٢٥٪ بحلول ٢٠٢٦</p>
+        </div>
+        <div style="margin-top:20px;">
+          <div style="display:flex; justify-content:space-between; background:#f0f6fd; border-radius:40px; padding:15px;">
+            <span>نسبة المواءمة بعد التحديث المستهدف</span>
+            <span style="font-size:1.8rem;font-weight:800;color:#0f3b5e;">٨٩٪</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- قسم الشهادات والإحصائيات الخاصة بالجامعة -->
+    <div style="background: #0a293f; border-radius: 60px; padding: 40px; color: white; margin: 50px 0;">
+      <div style="display: flex; gap: 30px; flex-wrap: wrap; justify-content: space-around;">
+        <div><i class="fas fa-trophy" style="font-size:40px;"></i> <span style="font-size:2rem; margin-right:10px;">٩٢</span> منظمة توظف خريجينا</div>
+        <div><i class="fas fa-arrow-up" style="font-size:40px;"></i> <span style="font-size:2rem;">+١٨٪</span> نمو التوظيف السنوي</div>
+        <div><i class="fas fa-school"></i> ١٦ كلية وبرنامج</div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer-uni">
+    <p>جامعة الباحة  · منصة مسار لتتبع الخريجين وسد فجوة المهارات | جميع الحقوق محفوظة ١٤٤٦ هـ</p>
+  </footer>
+
+  <script>
+    (function() {
+      // بيانات المنظمات الشريكة
+      const partners = [
+        { name: 'شركة تكوين', field: 'تقنية', offers: ٧ },
+        { name: 'بنك الراجحي', field: 'مصارف', offers: ١٢ },
+        { name: 'سابك', field: 'صناعات', offers: ٥ },
+        { name: 'علم', field: 'تقنية حكومية', offers: ٩ }
+      ];
+
+      const partnerContainer = document.getElementById('partnerListContainer');
+      if (partnerContainer) {
+        partners.forEach(p => {
+          const item = document.createElement('div');
+          item.className = 'partner-item';
+          item.innerHTML = `
+            <div class="partner-icon"><i class="fas fa-building"></i></div>
+            <div class="partner-details">
+              <h4>${p.name}</h4>
+              <p>${p.field} · <span class="badge-offer">${p.offers} فرصة تدريب</span></p>
+            </div>
+          `;
+          partnerContainer.appendChild(item);
+        });
+      }
+
+      // إحصائيات رقمية قابلة للتحديث (محاكاة لبيانات حية)
+      // يمكن إعادة تعيين الأرقام بعد فترة
+      setTimeout(() => {
+        if (document.getElementById('totalGrads')) document.getElementById('totalGrads').innerText = '٥,٣٨٠';
+        if (document.getElementById('employPercent')) document.getElementById('employPercent').innerText = '٨٦٪';
+        if (document.getElementById('partnerCount')) document.getElementById('partnerCount').innerText = '٤٧';
+      }, 3500); // بعد 3.5 ثانية
+
+      // إضافة بعض التفاعل لأزرار التحميل (تم بالفعل onclick)
+      // أي أزرار إضافية
+
+      // تحسين شكل شريط التقدم (موجود)
+    })();
+  </script>
+  <!-- دعم الأرقام المتحركة بسيط -->
+</body>
+</html>
