@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>إدارة المقابلات | مسار</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Cairo', sans-serif; background: #f4f8fd; color: #1e2f40; }
+    .container { max-width: 1000px; margin: 50px auto; padding: 0 20px; }
+    
+    .top-bar { background: white; padding: 15px 0; border-bottom: 1px solid #e0eaf3; position: sticky; top: 0; z-index: 100; box-shadow: 0 4px 12px rgba(0,0,0,0.02); }
+    .logo { display:flex; align-items:center; gap:10px; font-size:24px; font-weight:800; color:#0f3b5e; justify-content:center; }
+    .logo a { color:#0f3b5e; text-decoration:none; display:flex; align-items:center; gap:8px; }
+    
+    .header { text-align:center; margin-bottom: 40px; }
+    .header h1 { font-size: 2.5rem; color: #0a2a44; font-weight: 800; }
+    .header p { font-size: 1.1rem; color: #5a7b96; margin-top: 10px; }
+    
+    .interview-card { background: white; border-radius: 20px; padding: 25px; border: 1px solid #cde0ed; box-shadow: 0 8px 24px -10px rgba(15,59,94,0.1); margin-bottom: 20px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 20px; transition: 0.3s; }
+    .interview-card:hover { border-color: #38bdf8; box-shadow: 0 10px 30px -10px rgba(56,189,248,0.2); }
+    .info { flex: 1; min-width: 280px; }
+    .info h3 { font-size: 1.4rem; color: #0f3b5e; margin-bottom: 8px; font-weight: 800; }
+    .info p { color: #4b667e; font-size: 1rem; margin-bottom: 5px; }
+    .info i { color: #82a3bc; width: 25px; text-align: center; }
+    
+    .actions { display: flex; gap: 15px; flex-wrap: wrap; }
+    .btn { padding: 12px 25px; border-radius: 30px; border: none; font-weight: 700; font-size: 1rem; cursor: pointer; display: flex; align-items: center; gap: 8px; transition: 0.2s; font-family: 'Cairo'; }
+    .btn-accept { background: #0f7b4a; color: white; }
+    .btn-accept:hover { background: #0b5c37; }
+    .btn-reject { background: #fee2e2; color: #991b1b; }
+    .btn-reject:hover { background: #fecaca; }
+    
+    .empty-state { text-align: center; padding: 60px 20px; color: #8ba5ba; }
+    .empty-state i { font-size: 4rem; margin-bottom: 20px; opacity: 0.5; }
+    .empty-state h2 { color: #43637e; font-weight: 700; }
+    
+    .back-link { display: inline-block; margin-bottom: 20px; color: #0f3b5e; text-decoration: none; font-weight: 700; font-size: 1.1rem; }
+    .back-link i { margin-left: 8px; }
+    
+    @media (max-width: 600px) {
+      .interview-card { flex-direction: column; align-items: stretch; text-align: center; }
+      .actions { flex-direction: column; }
+      .actions button { width: 100%; justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+  <div class="top-bar">
+    <div class="logo">
+      <a href="company.html"><i class="fas fa-briefcase"></i> مسار | بوابة المنظمات</a>
+    </div>
+  </div>
+
+  <div class="container">
+    <a href="company.html" class="back-link"><i class="fas fa-arrow-right"></i> العودة للوحة تحكم الشركة</a>
+    
+    <div class="header">
+      <h1>إدارة المقابلات الوظيفية</h1>
+      <p>قم باتخاذ القرارات النهائية للمتقدمين بعد إنهائك للمقابلات معهم (القبول أو الرفض).</p>
+    </div>
+
+    <div id="interviewsContainer">
+      <!-- Cards will be populated here -->
+    </div>
+  </div>
+
+  <script>
+    function renderInterviews() {
+       const container = document.getElementById('interviewsContainer');
+       let interviews = JSON.parse(localStorage.getItem('masar_interviews') || '[]');
+       
+       if (interviews.length === 0) {
+          container.innerHTML = `
+            <div class="empty-state">
+              <i class="fas fa-calendar-times"></i>
+              <h2>لا توجد مقابلات مجدولة حالياً</h2>
+              <p>قم باستعراض طلبات الخريجين في لوحة الشركة وتنسيق مقابلات معهم لتظهر لك هنا.</p>
+            </div>
+          `;
+          return;
+       }
+
+       let html = '';
+       interviews.forEach(interview => {
+          html += `
+            <div class="interview-card">
+              <div class="info">
+                <h3><i class="fas fa-user-graduate"></i> ${interview.student}</h3>
+                <p><i class="fas fa-id-badge"></i> الفرصة الوظيفية: <strong>${interview.job}</strong></p>
+                <p><i class="far fa-clock"></i> تاريخ التنسيق: ${interview.date}</p>
+              </div>
+              <div class="actions">
+                <button class="btn btn-accept" onclick="acceptCandidate(${interview.id}, '${interview.student}', '${interview.company}')">
+                  <i class="fas fa-check-circle"></i> قبول وتوظيف
+                </button>
+                <button class="btn btn-reject" onclick="rejectCandidate(${interview.id}, '${interview.student}')">
+                  <i class="fas fa-times-circle"></i> رفض وإغلاق
+                </button>
+              </div>
+            </div>
+          `;
+       });
+       container.innerHTML = html;
+    }
+
+    window.acceptCandidate = function(id, studentName, companyName) {
+       if(!confirm(`هل أنت متأكد من قبول الخريج (${studentName}) وإتمام إجراءات التوظيف؟`)) return;
+       
+       // 1. حذف من المقابلات
+       let interviews = JSON.parse(localStorage.getItem('masar_interviews') || '[]');
+       interviews = interviews.filter(i => i.id !== id);
+       localStorage.setItem('masar_interviews', JSON.stringify(interviews));
+       
+       // 2. تسجيل كـ (مقبول) لإشعار الجامعة
+       let acceptances = JSON.parse(localStorage.getItem('masar_acceptances') || '[]');
+       const date = new Date().toLocaleDateString('ar-EG');
+       acceptances.push({ student: studentName, company: companyName, date: date });
+       localStorage.setItem('masar_acceptances', JSON.stringify(acceptances));
+       
+       alert('🎉 تم اعتماد قبول الخريج وتوظيفه بنجاح!\n\nسيتم إشعار جامعة الباحة لتحديث إحصائياتها المعنية بالتوظيف.');
+       renderInterviews();
+    };
+
+    window.rejectCandidate = function(id, studentName) {
+       if(!confirm(`هل أنت متأكد من رغبتك برفض المرشح (${studentName})؟\n\nهذا الإجراء سيقفل ملف المرشح لهذه الوظيفة.`)) return;
+       
+       let interviews = JSON.parse(localStorage.getItem('masar_interviews') || '[]');
+       interviews = interviews.filter(i => i.id !== id);
+       localStorage.setItem('masar_interviews', JSON.stringify(interviews));
+       
+       alert('تم رفض المرشح وإنهاء المقابلة بنجاح.');
+       renderInterviews();
+    };
+
+    renderInterviews();
+  </script>
+</body>
+</html>

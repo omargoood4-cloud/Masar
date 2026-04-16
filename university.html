@@ -292,6 +292,17 @@
   </div>
 
   <main class="container">
+    <!-- إشعارات التوظيف الحديثة -->
+    <div id="acceptanceAlerts" style="background: #eef8df; border: 1px solid #c2e2a8; border-radius: 30px; padding: 25px; margin-top: 30px; margin-bottom: 20px; display: none;">
+      <h3 style="color: #2b540f; margin-bottom: 15px;"><i class="fas fa-bell"></i> أحدث عمليات التوظيف لطلاب الجامعة</h3>
+      <div id="alertsContainer" style="display: flex; flex-direction: column; gap: 10px;"></div>
+    </div>
+
+    <!-- تنويه بمحدودية البيانات -->
+    <div style="background:#fff3cd; border: 1px solid #ffeeba; color: #856404; padding: 15px 25px; border-radius: 20px; margin-top: 30px; margin-bottom: 10px;">
+       <i class="fas fa-exclamation-triangle"></i> <strong>تنويه:</strong> إحصائيات المنصة تعتمد على بيانات المدخلات، وتوجد محدودية في الوصول إلى بيانات دقيقة للخريجين في المراحل الأولى من الإطلاق.
+    </div>
+
     <!-- أرقام سريعة عن أداء الخريجين -->
     <div class="stats-row">
       <div class="stat-uni-card">
@@ -315,7 +326,7 @@
       <div class="card">
         <div class="card-header">
           <i class="fas fa-chart-pie"></i>
-          <span>المواءمة مع سوق العمل</span>
+          <span>المواءمة لتسريع التوظيف</span>
         </div>
         <div class="progress-item">
           <div class="progress-label"><span>هندسة البرمجيات</span> <span>٩٢٪</span></div>
@@ -483,6 +494,19 @@
 
       // إضافة بعض التفاعل لأزرار التحميل (تم بالفعل onclick)
       // أي أزرار إضافية
+
+      // جلب وعرض إشعارات القبول الوظيفي من الشركات
+      const acceptances = JSON.parse(localStorage.getItem('masar_acceptances') || '[]');
+      if(acceptances.length > 0) {
+        document.getElementById('acceptanceAlerts').style.display = 'block';
+        let html = '';
+        acceptances.forEach(acc => {
+           html += `<div style="background: white; padding: 15px; border-radius: 15px; color: #2a2a2a; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); font-weight:600;">
+             🎉 الخريج <span style="color:#0f3b5e;">${acc.student}</span> تم قبوله للتوظيف بنجاح في <span style="color:#0f3b5e;">${acc.company}</span> <span style="color:#64748b; font-size:0.9rem; margin-right:10px;"><i class="far fa-clock"></i> ${acc.date}</span>
+           </div>`;
+        });
+        document.getElementById('alertsContainer').innerHTML = html;
+      }
 
       // تحسين شكل شريط التقدم (موجود)
     })();

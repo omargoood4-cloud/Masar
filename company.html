@@ -438,7 +438,12 @@
     <div class="stats-company">
       <div class="stat-card"><span class="num">٣٢</span><div class="label">فرصة متاحة</div></div>
       <div class="stat-card"><span class="num">١٢٤</span><div class="label">متقدم جديد</div></div>
-      <div class="stat-card"><span class="num">٨٩</span><div class="label">مقابلة مجدولة</div></div>
+      <a href="interviews.html" style="text-decoration:none; display:block;">
+         <div class="stat-card" style="border: 2px solid #38bdf8; background: #f4fbff; transition: 0.3s;" onmouseover="this.style.background='#e0f2fe'" onmouseout="this.style.background='#f4fbff'">
+            <span class="num" style="color:#0284c7;">مقابلات</span>
+            <div class="label" style="color:#0369a1; font-weight:bold;">إدارة واتخاذ القرار <i class="fas fa-arrow-left"></i></div>
+         </div>
+      </a>
       <div class="stat-card"><span class="num">١٨</span><div class="label">توظيف ناجح</div></div>
     </div>
 
@@ -573,10 +578,10 @@
 
       if (storedJobs) {
         jobs = JSON.parse(storedJobs);
-        // تحديث الأسماء الوهمية القديمة للأسماء الجديدة في الفرص الافتراضية
-        if(jobs[0] && jobs[0].id === 1) jobs[0].applicants = names1;
-        if(jobs[1] && jobs[1].id === 2) jobs[1].applicants = names2;
-        if(jobs[2] && jobs[2].id === 3) jobs[2].applicants = names3;
+        // تحديث الأسماء الوهمية القديمة للأسماء الجديدة في الفرص الافتراضية بأمان
+        let j1 = jobs.find(j => j.id === 1); if(j1) j1.applicants = names1;
+        let j2 = jobs.find(j => j.id === 2); if(j2) j2.applicants = names2;
+        let j3 = jobs.find(j => j.id === 3); if(j3) j3.applicants = names3;
         localStorage.setItem('masar_jobs', JSON.stringify(jobs));
       } else {
         jobs = [
@@ -635,7 +640,7 @@
                         </div>
                         <div class="app-actions">
                           <button class="btn-cv" onclick="alert('جاري التنزيل و فتح نافذة السيرة الذاتية وملف الشهادات المرفقة لـ ${appName}...')"><i class="fas fa-file-invoice"></i> المستندات</button>
-                          <button class="btn-contact" onclick="alert('تم فتح واجهة المراسلة المباشرة مع ${appName} لتحديد موعد المقابلة الوظيفية.')"><i class="fas fa-comments"></i> تواصل</button>
+                          <button class="btn-contact" style="background:#0f7b4a;" onclick="scheduleMeeting('${appName}', '${job.company}', '${job.title}')"><i class="fas fa-calendar-check"></i> تحديد مقابلة</button>
                         </div>
                       </div>
                     `;
@@ -650,9 +655,35 @@
       }
 
       // إغلاق المودال
+      const modalOverlay = document.getElementById('applicantModal');
       document.getElementById('closeModalBtn')?.addEventListener('click', () => {
-         document.getElementById('applicantModal').classList.remove('active');
+         modalOverlay.classList.remove('active');
       });
+      modalOverlay.addEventListener('click', (e) => {
+         if (e.target === modalOverlay) {
+            modalOverlay.classList.remove('active');
+         }
+      });
+
+      // دالة تنسيق المقابلة
+      window.scheduleMeeting = function(studentName, companyName, jobTitle) {
+         let interviews = JSON.parse(localStorage.getItem('masar_interviews') || '[]');
+         
+         // التحقق من أن المقابلة لم تبرمج مسبقاً لنفس الشخص ونفس الوظيفة
+         const existing = interviews.find(i => i.student === studentName && i.job === jobTitle);
+         if(existing) {
+             alert('لقد قمت مسبقاً بجدولة مقابلة لهذا الخريج!');
+             return;
+         }
+
+         const date = new Date().toLocaleDateString('ar-EG');
+         interviews.push({ student: studentName, company: companyName, job: jobTitle, date: date, id: Date.now() });
+         localStorage.setItem('masar_interviews', JSON.stringify(interviews));
+         
+         if(confirm(`تم تنسيق المقابلة مع الخريج (${studentName}) بنجاح!\n\nهل ترغب بالانتقال لصفحة إدارة المقابلات لاتخاذ قرار القبول/الرفض فوراً؟`)) {
+            window.location.href = 'interviews.html';
+         }
+      };
 
       renderJobs();
 
@@ -675,6 +706,7 @@
         renderJobs();
 
         alert(`تم نشر الفرصة "${title}" بنجاح وستظهر للطلاب فوراً.`);
+        e.target.reset(); // تفريغ الحقول بعد الإضافة
       });
 
       // زر تحديث القائمة
