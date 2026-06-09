@@ -412,7 +412,7 @@
         <i class="fas fa-briefcase"></i>
         <span>مسار | بوابة المنظمات</span>
       </div>
-      <div class="company-badge"><i class="fas fa-building"></i> شركة تكوين الرقمية</div>
+      <div class="company-badge"><i class="fas fa-building"></i> شركة الاصدقاء الخمسة</div>
     </div>
   </div>
 
@@ -423,7 +423,7 @@
         <i class="fas fa-building"></i>
       </div>
       <div class="company-info">
-        <h1>شركة تكوين الرقمية</h1>
+        <h1>شركة الاصدقاء الخمسة</h1>
         <div class="company-meta">
           <span><i class="fas fa-tag"></i> تقنية المعلومات والذكاء الاصطناعي</span>
           <span><i class="fas fa-map-pin"></i> الرياض، السعودية</span>
@@ -585,10 +585,10 @@
         localStorage.setItem('masar_jobs', JSON.stringify(jobs));
       } else {
         jobs = [
-          { id: 1, title: 'مطور Full Stack', type: 'دوام كامل', applicants: names1, location: 'الرياض', company: 'شركة تكوين الرقمية' },
-          { id: 2, title: 'أخصائي تسويق رقمي', type: 'تدريب', applicants: names2, location: 'جدة', company: 'شركة تكوين الرقمية' },
-          { id: 3, title: 'محلل بيانات', type: 'دوام كامل', applicants: names3, location: 'الرياض', company: 'شركة تكوين الرقمية' },
-          { id: 4, title: 'مصمم UI/UX', type: 'دوام جزئي', applicants: [], location: 'عن بعد', company: 'شركة تكوين الرقمية' }
+          { id: 1, title: 'مطور Full Stack', type: 'دوام كامل', applicants: names1, location: 'الرياض', company: 'شركة الاصدقاء الخمسة' },
+          { id: 2, title: 'أخصائي تسويق رقمي', type: 'تدريب', applicants: names2, location: 'جدة', company: 'شركة الاصدقاء الخمسة' },
+          { id: 3, title: 'محلل بيانات', type: 'دوام كامل', applicants: names3, location: 'الرياض', company: 'شركة الاصدقاء الخمسة' },
+          { id: 4, title: 'مصمم UI/UX', type: 'دوام جزئي', applicants: [], location: 'عن بعد', company: 'شركة الاصدقاء الخمسة' }
         ];
         localStorage.setItem('masar_jobs', JSON.stringify(jobs));
       }
@@ -599,7 +599,7 @@
         jobs = JSON.parse(localStorage.getItem('masar_jobs')) || jobs; // جلب أحدث البيانات
         jobContainer.innerHTML = '';
         jobs.forEach((job) => {
-          if(job.company !== 'شركة تكوين الرقمية') return; // عرض فرص هذه الشركة فقط
+          if(job.company !== 'شركة الاصدقاء الخمسة') return; // عرض فرص هذه الشركة فقط
           const jobDiv = document.createElement('div');
           jobDiv.className = 'job-item';
           jobDiv.innerHTML = `
@@ -700,7 +700,7 @@
           return;
         }
 
-        const newJob = { id: Date.now(), title: title, type: type, applicants: [], location: location || 'غير محدد', company: 'شركة تكوين الرقمية' };
+        const newJob = { id: Date.now(), title: title, type: type, applicants: [], location: location || 'غير محدد', company: 'شركة الاصدقاء الخمسة' };
         jobs.push(newJob);
         localStorage.setItem('masar_jobs', JSON.stringify(jobs));
         renderJobs();
