@@ -435,7 +435,7 @@
       <button class="tab-btn" id="tabCertBtn"><i class="fas fa-certificate"></i> الشهادات والملفات</button>
       <button class="tab-btn" id="tabOrgBtn"><i class="fas fa-building"></i> المنظمات</button>
       <button class="tab-btn" id="tabJobsBtn"><i class="fas fa-briefcase"></i> الفرص الوظيفية</button>
-      <button class="tab-btn" style="position:relative;" id="tabNoticeBtn">
+      <button class="tab-btn" id="tabNoticeBtn">
         <i class="fas fa-bell"></i> الإشعارات
         <span style="position:absolute; top:-5px; right:-10px; background:#e74c3c; color:white; border-radius:50%; width:24px; height:24px; font-size:12px; display:flex; align-items:center; justify-content:center; box-shadow:0 2px 5px rgba(0,0,0,0.2);">1</span>
       </button>
@@ -448,11 +448,20 @@
 
   <script>
     (function() {
-      // ---------- بيانات مشتركة ----------
+      // ---------- بيانات مشتركة (تم إصلاح الخطأ الأول) ----------
+      let cvName = 'خالد علي هجاد الغامدي'; // تم إصلاح الخطأ: إضافة علامات الاقتباس بشكل صحيح
+      let cvMajor = 'هندسة برمجيات';
+      let cvYear = '٢٠٢٤';
+      let cvSummary = 'خريج هندسة برمجيات، مهتم بتطوير الأنظمة السحابية والذكاء الاصطناعي.';
+      let cvSkills = ['JavaScript', 'React', 'Python', 'التواصل'];
+      let cvExperiences = [{ job: 'متدرب تطوير ويب', company: 'شركة الاصدقاء الخمسة', duration: '٦ أشهر' }];
+      let cvEmail = 'khaled@student.com';
+
+      // بيانات المنظمات
       let organizations = [
         { name: 'شركة الاصدقاء الخمسة', field: 'تقنية', followers: 156 },
-        { name: 'سحاب المستقبل للمعلوماتية  ', field: 'تعليم', followers: 88 },
-        { name: 'مجموعة الائتمان الأول للاستثمار ', field: 'مصارف', followers: 203 },
+        { name: 'سحاب المستقبل للمعلوماتية', field: 'تعليم', followers: 88 },
+        { name: 'مجموعة الائتمان الأول للاستثمار', field: 'مصارف', followers: 203 },
         { name: 'أوتاد الشرق للاستشارات الهندسية', field: 'استشارات', followers: 67 },
       ];
 
@@ -470,18 +479,10 @@
       const tabNotice = document.getElementById('tabNoticeBtn');
       const tabJobs = document.getElementById('tabJobsBtn');
 
-      // دوال مساعدة للتخزين المؤقت للقيم
-      let cvName = خالد علي هجاد الغامدي'';
-      let cvMajor = 'هندسة برمجيات';
-      let cvYear = '٢٠٢٤';
-      let cvSummary = 'خريج هندسة برمجيات، مهتم بتطوير الأنظمة السحابية والذكاء الاصطناعي.';
-      let cvSkills = ['JavaScript', 'React', 'Python', 'التواصل'];
-      let cvExperiences = [{ job: 'متدرب تطوير ويب', company: 'شركة الاصدقاء الخمسة', duration: '٦ أشهر' }];
-
-      // دالة تحديث المعاينة (تستدعى من كل مكان)
-      window.updatePreview = function() {
-        // لا تفعل شيئاً هنا، سيتم تنفيذها داخل تبويب CV
-      };
+      // دوال مساعدة لتحديث المعاينة
+      function updateCvPreview() {
+        // يتم استدعاؤها فقط داخل تبويب CV
+      }
 
       // ---------- إنشاء محتوى التبويبات ----------
       function renderCvTab() {
@@ -491,11 +492,11 @@
               <div class="card-header"><i class="fas fa-id-card"></i> <span>بيانات السيرة الذاتية</span></div>
               <form id="cvForm">
                 <div class="form-row">
-                  <div class="form-group"><label>الاسم الكامل <span style="color:#b33;">*</span></label><input type="text" id="fullName" value="${cvName}"></div>
+                  <div class="form-group"><label>الاسم الكامل <span style="color:#b33;">*</span></label><input type="text" id="fullName" value="${cvName.replace(/['"]/g, '&quot;')}"></div>
                   <div class="form-group"><label>التخصص الدقيق</label><input type="text" id="major" value="${cvMajor}"></div>
                 </div>
                 <div class="form-row">
-                  <div class="form-group"><label>البريد الإلكتروني</label><input type="email" id="email" value="ahmed@student.com"></div>
+                  <div class="form-group"><label>البريد الإلكتروني</label><input type="email" id="email" value="${cvEmail}"></div>
                   <div class="form-group"><label>سنة التخرج</label>
                     <select id="gradYear">
                       <option>٢٠٢٣</option>
@@ -524,7 +525,7 @@
                         <div class="form-group"><input type="text" class="exp-job" placeholder="المسمى الوظيفي" value="${exp.job}"></div>
                         <div class="form-group"><input type="text" class="exp-company" placeholder="الشركة" value="${exp.company}"></div>
                         <div class="form-group" style="flex:0.5;"><input type="text" class="exp-duration" placeholder="المدة" value="${exp.duration}"></div>
-                        <button type="button" class="btn-sm" style="background:transparent; color:#a00; border:none;" onclick="this.closest('.form-row').remove(); updatePreview();"><i class="fas fa-trash-alt"></i></button>
+                        <button type="button" class="btn-sm" style="background:transparent; color:#a00; border:none;" onclick="this.closest('.form-row').remove(); window.updateCvPreviewFromDOM();"><i class="fas fa-trash-alt"></i></button>
                       </div>
                     `).join('')}
                   </div>
@@ -637,7 +638,7 @@
             <div class="card">
               <div class="card-header"><i class="fas fa-plus-circle"></i> <span>تسجيل منظمة جديدة</span></div>
               <form id="addOrgFormTab">
-                <div class="form-group" style="margin-bottom:15px;"><label>اسم المنظمة</label><input type="text" id="orgNameInputTab" placeholder="مثال: شركة تكوين"></div>
+                <div class="form-group" style="margin-bottom:15px;"><label>اسم المنظمة</label><input type="text" id="orgNameInputTab" placeholder="مثال: سحاب المستقبل للمعلوماتية"></div>
                 <div class="form-group" style="margin-bottom:20px;"><label>المجال/القطاع</label><input type="text" id="orgFieldInputTab" placeholder="تقنية / مالية / تعليم"></div>
                 <button type="submit" class="btn btn-sm" style="width:100%;"><i class="fas fa-building"></i> إضافة إلى القائمة</button>
               </form>
@@ -675,8 +676,8 @@
               </div>
               
               <div style="background:#f9fdfa; padding:30px; border-radius:20px; border:1px solid #e1f7e8; line-height:1.9; font-size:1.15rem; color:#2c3e50;">
-                <h3 style="color:#27ae60; margin-bottom:20px; font-size:1.4rem;"><i class="fas fa-check-circle"></i> مبروك أحمد! خطوتك الأولى نحو المهنة</h3>
-                <p>يسعدنا إخبارك بأنه تمت مراجعة ملفك المهني عبر <strong>منصة مسار</strong> من قبل <strong>(شركة تكوين الرقمية)</strong> لشغل وظيفة <strong>مطور واجهات أمامية (Frontend Developer)</strong>.</p>
+                <h3 style="color:#27ae60; margin-bottom:20px; font-size:1.4rem;"><i class="fas fa-check-circle"></i> مبروك خالد! خطوتك الأولى نحو المهنة</h3>
+                <p>يسعدنا إخبارك بأنه تمت مراجعة ملفك المهني عبر <strong>منصة مسار</strong> من قبل <strong>(سحاب المستقبل للمعلوماتية)</strong> لشغل وظيفة <strong>مطور واجهات أمامية (Frontend Developer)</strong>.</p>
                 <p style="margin-top:10px;">بناءً على نسبة المواءمة العالية لمهاراتك وتخصصك الأكاديمي مع متطلبات الفرصة، تم اختيارك كأحد المرشحين النهائيين لإجراء المقابلة الفنية.</p>
                 
                 <div style="background:white; padding:25px; border-radius:15px; margin:30px 0; border-right:4px solid #3498db; box-shadow:0 6px 15px rgba(0,0,0,0.04);">
@@ -689,8 +690,8 @@
                 </div>
                 
                 <div style="display:flex; flex-wrap:wrap; gap:15px; margin-top:35px;">
-                  <button class="btn" style="background:#27ae60;" onclick="alert('تم تأكيد الحضور! تم إشعار الشركة بردك. بالتوفيق.')"><i class="fas fa-check"></i> تأكيد الحضور والموعد</button>
-                  <button class="btn btn-outline" style="border-color:#e74c3c; color:#e74c3c;" onclick="alert('سيتم إرسال طلب بجدولة موعد بديل للشركة.')"><i class="fas fa-calendar-times"></i> طلب موعد بديل</button>
+                  <button class="btn" style="background:#27ae60;" onclick="confirmAttendance()"><i class="fas fa-check"></i> تأكيد الحضور والموعد</button>
+                  <button class="btn btn-outline" style="border-color:#e74c3c; color:#e74c3c;" onclick="requestAlternateDate()"><i class="fas fa-calendar-times"></i> طلب موعد بديل</button>
                 </div>
               </div>
             </div>
@@ -703,6 +704,14 @@
             </div>
           </section>
         `;
+        
+        // تعريف الدوال العامة للإشعارات
+        window.confirmAttendance = function() {
+          alert('تم تأكيد الحضور! تم إشعار الشركة بردك. بالتوفيق.');
+        };
+        window.requestAlternateDate = function() {
+          alert('سيتم إرسال طلب بجدولة موعد بديل للشركة. سيتم التواصل معك قريباً.');
+        };
       }
 
       function renderJobsTab() {
@@ -738,6 +747,7 @@
 
         container.innerHTML = '';
         jobs.reverse().forEach(job => {
+          // استخدام cvName المعرّف بشكل صحيح
           const isApplied = job.applicants.some(app => (typeof app === 'string' ? app : app.name) === cvName);
           const jobDiv = document.createElement('div');
           jobDiv.style = 'border: 1px solid #e0ebf3; border-radius: 20px; padding: 25px; margin-bottom: 20px; display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:20px; background:#fafdff;';
@@ -757,22 +767,18 @@
           if(!isApplied) {
             document.getElementById(`applyBtn-${job.id}`).addEventListener('click', function(e) {
                 e.preventDefault();
-                // تحديث الـ localStorage
                 let currentStoredJobs = JSON.parse(localStorage.getItem('masar_jobs'));
                 let currentJob = currentStoredJobs.find(j => j.id == job.id);
-                // التحقق المزدوج إذا كان المتقدم مسجل مسبقاً كنص أو أوبجكت
                 const alreadyApplied = currentJob.applicants.some(app => (typeof app === 'string' ? app : app.name) === cvName);
                 if(currentJob && !alreadyApplied){
-                    let majorInput = document.getElementById('major');
-                    let expInput = document.querySelector('.exp-job');
                     currentJob.applicants.push({
                         name: cvName,
-                        major: majorInput ? majorInput.value : 'هندسة برمجيات',
-                        experience: expInput ? expInput.value : 'حديث تخرج'
+                        major: cvMajor,
+                        experience: cvExperiences.length > 0 ? cvExperiences[0].job : 'حديث تخرج'
                     });
                     localStorage.setItem('masar_jobs', JSON.stringify(currentStoredJobs));
                     alert('تم التقديم على الفرصة بنجاح وإرفاق سيرتك الذاتية! سيصل إشعار للشركة للاطلاع على ملفك الخاص.');
-                    renderStudentJobs(); // إعادة رسم البطاقات لتحديث زر التقديم
+                    renderStudentJobs();
                 }
             });
           }
@@ -796,7 +802,7 @@
         document.querySelectorAll('#organizationsListSide .follow-btn').forEach(btn => {
           btn.addEventListener('click', function(e) { e.preventDefault(); this.classList.toggle('following'); this.innerText = this.classList.contains('following') ? 'متابَع' : 'متابعة'; });
         });
-        document.getElementById('refreshOrgsSide')?.addEventListener('click', renderOrgListSide);
+        document.getElementById('refreshOrgsSide')?.addEventListener('click', () => renderOrgListSide());
       }
 
       function renderOrgListFull() {
@@ -815,13 +821,61 @@
         document.querySelectorAll('#organizationsListFull .follow-btn').forEach(btn => {
           btn.addEventListener('click', function(e) { e.preventDefault(); this.classList.toggle('following'); this.innerText = this.classList.contains('following') ? 'متابَع' : 'متابعة'; });
         });
-        document.getElementById('refreshOrgsFull')?.addEventListener('click', renderOrgListFull);
+        document.getElementById('refreshOrgsFull')?.addEventListener('click', () => renderOrgListFull());
       }
+
+      // دالة تحديث المعاينة من DOM
+      window.updateCvPreviewFromDOM = function() {
+        const name = document.getElementById('fullName')?.value || '';
+        const major = document.getElementById('major')?.value || '';
+        const grad = document.getElementById('gradYear')?.value || '';
+        const summary = document.getElementById('summary')?.value || '';
+
+        const previewName = document.getElementById('previewName');
+        const previewMajor = document.getElementById('previewMajor');
+        const previewSummary = document.getElementById('previewSummary');
+        const previewSkills = document.getElementById('previewSkills');
+        const previewExps = document.getElementById('previewExps');
+
+        if (previewName) previewName.innerText = name;
+        if (previewMajor) previewMajor.innerText = major + ' · تخرج ' + grad;
+        if (previewSummary) previewSummary.innerText = summary;
+
+        const skills = Array.from(document.querySelectorAll('#skillsContainer .skill-tag')).map(tag => tag.innerText.replace('×', '').trim());
+        if (previewSkills) previewSkills.innerText = 'المهارات: ' + (skills.join(' · ') || 'لا توجد');
+
+        const expRows = document.querySelectorAll('#experiencesArea .exp-row');
+        let expText = '';
+        expRows.forEach(row => {
+          const job = row.querySelector('.exp-job')?.value || '';
+          const company = row.querySelector('.exp-company')?.value || '';
+          const dur = row.querySelector('.exp-duration')?.value || '';
+          if (job && company) expText += `${job} في ${company} (${dur})  |  `;
+        });
+        if (previewExps) previewExps.innerHTML = expText ? 'خبرة: ' + expText.slice(0,-3) : 'لا توجد خبرات مسجلة';
+        
+        // تحديث المتغيرات العامة
+        cvName = name;
+        cvMajor = major;
+        cvYear = grad;
+        cvSummary = summary;
+        cvSkills = skills;
+        cvExperiences = [];
+        expRows.forEach(row => {
+          const job = row.querySelector('.exp-job')?.value || '';
+          const company = row.querySelector('.exp-company')?.value || '';
+          const duration = row.querySelector('.exp-duration')?.value || '';
+          if (job && company) {
+            cvExperiences.push({ job, company, duration });
+          }
+        });
+      };
 
       // أحداث تبويب CV
       function attachCvEvents() {
         const skillsContainer = document.getElementById('skillsContainer');
         const skillInput = document.getElementById('skillInput');
+        
         document.getElementById('addSkillBtn')?.addEventListener('click', function() {
           const newSkill = skillInput.value.trim();
           if (!newSkill) return;
@@ -830,15 +884,18 @@
           span.innerHTML = `${newSkill} <i class="fas fa-times remove-skill"></i>`;
           span.querySelector('.remove-skill').addEventListener('click', function(e) {
             e.target.closest('.skill-tag').remove();
-            updatePreviewFromCv();
+            window.updateCvPreviewFromDOM();
           });
           skillsContainer.appendChild(span);
           skillInput.value = '';
-          updatePreviewFromCv();
+          window.updateCvPreviewFromDOM();
         });
 
         document.querySelectorAll('.remove-skill').forEach(btn => {
-          btn.addEventListener('click', function(e) { e.target.closest('.skill-tag').remove(); updatePreviewFromCv(); });
+          btn.addEventListener('click', function(e) { 
+            e.target.closest('.skill-tag').remove(); 
+            window.updateCvPreviewFromDOM(); 
+          });
         });
 
         document.getElementById('addExpBtn')?.addEventListener('click', function() {
@@ -848,61 +905,56 @@
             <div class="form-group"><input type="text" class="exp-job" placeholder="المسمى الوظيفي" value="خبرة جديدة"></div>
             <div class="form-group"><input type="text" class="exp-company" placeholder="الشركة" value="مؤسسة"></div>
             <div class="form-group" style="flex:0.5;"><input type="text" class="exp-duration" placeholder="المدة" value="سنة"></div>
-            <button type="button" class="btn-sm" style="background:transparent; color:#a00; border:none;" onclick="this.closest('.form-row').remove(); updatePreview();"><i class="fas fa-trash-alt"></i></button>
+            <button type="button" class="btn-sm" style="background:transparent; color:#a00; border:none;" onclick="this.closest('.form-row').remove(); window.updateCvPreviewFromDOM();"><i class="fas fa-trash-alt"></i></button>
           `;
           document.getElementById('experiencesArea').appendChild(expDiv);
         });
 
         // ربط حقول التحديث
-        ['fullName','major','gradYear','summary'].forEach(id => {
-          document.getElementById(id)?.addEventListener('input', updatePreviewFromCv);
+        ['fullName', 'major', 'gradYear', 'summary', 'email'].forEach(id => {
+          document.getElementById(id)?.addEventListener('input', window.updateCvPreviewFromDOM);
         });
 
-        function updatePreviewFromCv() {
-          const name = document.getElementById('fullName')?.value || '';
-          const major = document.getElementById('major')?.value || '';
-          const grad = document.getElementById('gradYear')?.value || '';
-          const summary = document.getElementById('summary')?.value || '';
-
-          document.getElementById('previewName').innerText = name;
-          document.getElementById('previewMajor').innerText = major + ' · تخرج ' + grad;
-          document.getElementById('previewSummary').innerText = summary;
-
-          const skills = Array.from(document.querySelectorAll('#skillsContainer .skill-tag')).map(tag => tag.innerText.replace('×', '').trim());
-          document.getElementById('previewSkills').innerText = 'المهارات: ' + (skills.join(' · ') || 'لا توجد');
-
-          const expRows = document.querySelectorAll('#experiencesArea .exp-row');
-          let expText = '';
-          expRows.forEach(row => {
-            const job = row.querySelector('.exp-job')?.value || '';
-            const company = row.querySelector('.exp-company')?.value || '';
-            const dur = row.querySelector('.exp-duration')?.value || '';
-            if (job && company) expText += `${job} في ${company} (${dur})  |  `;
+        // ربط حقول الخبرات الديناميكية
+        const observeExp = new MutationObserver(function() {
+          document.querySelectorAll('.exp-job, .exp-company, .exp-duration').forEach(input => {
+            input.removeEventListener('input', window.updateCvPreviewFromDOM);
+            input.addEventListener('input', window.updateCvPreviewFromDOM);
           });
-          document.getElementById('previewExps').innerHTML = expText ? 'خبرة: ' + expText.slice(0,-3) : 'لا توجد خبرات مسجلة';
-        }
+        });
+        const expArea = document.getElementById('experiencesArea');
+        if (expArea) observeExp.observe(expArea, { childList: true, subtree: true });
 
-        document.getElementById('saveCVbtn')?.addEventListener('click', function() { alert('تم حفظ بيانات السيرة'); });
-        document.getElementById('exportBtn')?.addEventListener('click', function() { alert('تصدير السيرة إلى PDF (محاكاة)'); });
+        document.getElementById('saveCVbtn')?.addEventListener('click', function() { 
+          window.updateCvPreviewFromDOM();
+          alert('تم حفظ بيانات السيرة بنجاح!'); 
+        });
+        
+        document.getElementById('exportBtn')?.addEventListener('click', function() { 
+          alert('جاري تصدير السيرة إلى PDF (محاكاة - سيتم تفعيلها قريباً)'); 
+        });
 
-        updatePreviewFromCv();
-        window.updatePreview = updatePreviewFromCv;
+        window.updateCvPreviewFromDOM();
       }
 
       // أحداث تبويب الشهادات
       function attachCertEvents() {
         const uploadBox = document.getElementById('uploadCertBox');
         const fileInput = document.getElementById('certFileInput');
-        uploadBox.addEventListener('click', () => fileInput.click());
-        uploadBox.addEventListener('dragover', (e) => e.preventDefault());
-        uploadBox.addEventListener('drop', (e) => { e.preventDefault(); alert('تم إسقاط الملف (محاكاة)'); });
+        if (uploadBox) {
+          uploadBox.addEventListener('click', () => fileInput.click());
+          uploadBox.addEventListener('dragover', (e) => e.preventDefault());
+          uploadBox.addEventListener('drop', (e) => { 
+            e.preventDefault(); 
+            alert('تم استلام الملف (محاكاة - سيتم رفعه في الإصدار القادم)'); 
+          });
+        }
 
         document.getElementById('uploadCertBtn')?.addEventListener('click', function() {
           const certName = document.getElementById('newCertName').value.trim();
           if (!certName) { alert('الرجاء إدخال اسم الشهادة'); return; }
-          // محاكاة رفع ملف (نضيف شهادة وهمية)
           certificates.push({ name: certName, file: 'documento.pdf', date: new Date().toLocaleDateString('ar-EG') });
-          renderCertTab(); // إعادة رسم التبويب
+          renderCertTab();
           alert('تم رفع الشهادة بنجاح (محاكاة)');
         });
 
@@ -940,7 +992,7 @@
         [tabCv, tabCert, tabOrg, tabNotice, tabJobs].forEach(t => t.classList.remove('active'));
         tabNotice.classList.add('active');
         const badge = tabNotice.querySelector('span');
-        if(badge) badge.style.display = 'none'; // أخفِ إشارة التنبيه بعد قراءتها
+        if(badge) badge.style.display = 'none';
         renderNoticeTab();
       });
       tabJobs.addEventListener('click', () => {
@@ -948,6 +1000,16 @@
         tabJobs.classList.add('active');
         renderJobsTab();
       });
+
+      // إنشاء بيانات تجريبية للفرص الوظيفية إذا لم تكن موجودة
+      if (!localStorage.getItem('masar_jobs')) {
+        const sampleJobs = [
+          { id: 1, title: 'مطور واجهات أمامية (React)', company: 'سحاب المستقبل للمعلوماتية', location: 'الرياض (عن بعد)', type: 'دوام كامل', applicants: [] },
+          { id: 2, title: 'مبرمج بايثون - تدريب تعاوني', company: 'أوتاد الشرق للاستشارات الهندسية ', location: 'جدة', type: 'تدريب', applicants: [] },
+          { id: 3, title: 'مهندس برمجيات (حديث تخرج)', company: 'مجموعة الائتمان الأول للاستثمار', location: 'الرياض', type: 'حديث تخرج', applicants: [] }
+        ];
+        localStorage.setItem('masar_jobs', JSON.stringify(sampleJobs));
+      }
 
       // البداية مع تبويب CV
       renderCvTab();
